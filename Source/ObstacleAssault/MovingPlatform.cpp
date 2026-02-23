@@ -22,11 +22,24 @@ void AMovingPlatform::BeginPlay()
 void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (GetActorLocation().X <= -1390.0f && IsGoing == true) {
+		MoveSpeed *= -1.0f;
+		IsGoing = false;
+	}
+	else if (IsGoing == false && GetActorLocation().X >= -400.0f) {
+		MoveSpeed *= -1.0f;
+		IsGoing = true;
+	}
+
 	FVector DesiredVelocity = FVector(-MoveSpeed, 0.0f, 0.0f) * DeltaTime;
 
 	//FVector DesiredVelocity = TargetLocation * DeltaTime;
+	
+	
 	SetActorLocation(GetActorLocation() + DesiredVelocity);
 
-	UE_LOG(LogTemp, Display, TEXT("Tick DeltaTime: %.6f"), DeltaTime);
+
+	//UE_LOG(LogTemp, Display, TEXT("Tick DeltaTime: %.6f"), DeltaTime);
 }
 

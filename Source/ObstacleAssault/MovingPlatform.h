@@ -21,7 +21,8 @@ protected:
 
 public:	
 	FVector TargetLocation = FVector(-400.0f, 0.0f, 330.0f);
-	float MoveSpeed = 70.0f;
+	float MoveSpeed = 150.0f;
+	bool IsGoing = true;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
