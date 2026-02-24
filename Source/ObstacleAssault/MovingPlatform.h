@@ -21,10 +21,22 @@ protected:
 
 public:	
 	FVector TargetLocation = FVector(-400.0f, 0.0f, 330.0f);
-	float MoveSpeed = 150.0f;
+	
+	UPROPERTY(EditAnywhere)
+	FVector PlatformVelocity = FVector(-100.0f, 0.0f, 0.0f);
+	
 	bool IsGoing = true;
+	
+	enum MyStates{
+		STARTED,
+		RUNNING,
+		ENDED
+	};
+
+	MyStates myStates = MyStates::STARTED;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	void MovePlatform(float DeltaTime);
+	void RotatePlatform(float DeltaTime);
 };
