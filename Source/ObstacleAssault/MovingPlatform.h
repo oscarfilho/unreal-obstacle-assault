@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	FVector PlatformVelocity = FVector(-100.0f, 0.0f, 0.0f);
 	
+	UPROPERTY(EditAnywhere)
+	FVector TestVector = FVector(0.0f, 0.0f, 0.0f);
+
 	bool IsGoing = true;
 	
 	enum MyStates{
@@ -37,6 +40,7 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
 	void MovePlatform(float DeltaTime);
 	void RotatePlatform(float DeltaTime);
 };

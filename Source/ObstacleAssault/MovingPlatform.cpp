@@ -27,9 +27,14 @@ void AMovingPlatform::MovePlatform(float DeltaTime) {
 	SetActorLocation(GetActorLocation() + (PlatformVelocity * DeltaTime));
 }
 
+void AMovingPlatform::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) {
+	UE_LOG(LogTemp, Display, TEXT("HELLO WORLD! Actor Begin Overlap."));
+	PlatformVelocity = -PlatformVelocity;
+}
+
 // Rotates the platform
 void AMovingPlatform::RotatePlatform(float DeltaTime) {
-	SetActorRotation(GetActorRotation() + FRotator(0.0f, 0.0f, 50.0f * DeltaTime));
+	//SetActorRotation(GetActorRotation() + FRotator(0.0f, 0.0f, 50.0f * DeltaTime));
 	UE_LOG(LogTemp, Display, TEXT("Rotating Platform..."));
 }
 
