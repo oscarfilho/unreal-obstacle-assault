@@ -21,12 +21,20 @@ protected:
 
 public:	
 	FVector TargetLocation = FVector(-400.0f, 0.0f, 330.0f);
-	
+	UPROPERTY(VisibleAnywhere)
+	float elapsedTime = 0.0f;
+
+
 	UPROPERTY(EditAnywhere)
 	FVector PlatformVelocity = FVector(-100.0f, 0.0f, 0.0f);
-	
+
+	FVector startLocation = FVector(0.0f, 0.0f, 0.0f);
+
+	UPROPERTY(VisibleAnywhere)
+	float distanceMoved = 0.0f;
+
 	UPROPERTY(EditAnywhere)
-	FVector TestVector = FVector(0.0f, 0.0f, 0.0f);
+	float moveDistance;
 
 	bool IsGoing = true;
 	
@@ -40,7 +48,7 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	virtual void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
+	virtual void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 	void MovePlatform(float DeltaTime);
 	void RotatePlatform(float DeltaTime);
 };
