@@ -9,8 +9,10 @@ AMovingPlatform::AMovingPlatform()
 
 }
 
-void TestFunction(float MyFloatParam, int MyIntParam) {
+int TestFunction(float MyFloatParam, int MyIntParam) {
 	UE_LOG(LogTemp, Display, TEXT("HELLO WORLD! Test Function called. MyFloat: %.2f, MyIntParam: %3d"), MyFloatParam, MyIntParam);
+
+	return 5;
 }
 
 // Called when the game starts or when spawned
@@ -22,14 +24,15 @@ void AMovingPlatform::BeginPlay()
 
 	startLocation = GetActorLocation();
 
-	TestFunction(300.05f, 500);
+	int myResult = TestFunction(300.05f, 500);
+	UE_LOG(LogTemp, Display, TEXT("myResultInt = %d"), myResult);
 }
 
 void AMovingPlatform::MovePlatform(float DeltaTime) {
 	FVector currentLocation = GetActorLocation();
 	SetActorLocation(currentLocation + (PlatformVelocity * DeltaTime));
 
-	distanceMoved = FVector::Dist(startLocation, currentLocation);
+	distanceMoved = GetDistanceMoved();
 
 	if (distanceMoved >= moveDistance) {
 		float overshootDistance = distanceMoved - moveDistance;
@@ -42,8 +45,11 @@ void AMovingPlatform::MovePlatform(float DeltaTime) {
 		startLocation = newStartLocation;
 
 		PlatformVelocity = -PlatformVelocity;
-		
 	}
+}
+
+float AMovingPlatform::GetDistanceMoved() {
+	return FVector::Dist(startLocation, GetActorLocation());
 }
 
 void AMovingPlatform::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) {
@@ -55,6 +61,8 @@ void AMovingPlatform::ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherAc
 void AMovingPlatform::RotatePlatform(float DeltaTime) {
 	//SetActorRotation(GetActorRotation() + FRotator(0.0f, 0.0f, 50.0f * DeltaTime));
 	//UE_LOG(LogTemp, Display, TEXT("Rotating Platform..."));
+	FRotator RotationToAdd = RotationVelocity * DeltaTime;
+	AddActorLocalRotation(RotationToAdd);
 }
 
 // Called every frame
@@ -62,16 +70,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	elapsedTime += DeltaTime;
-
 	this->MovePlatform(DeltaTime);
-	//this->RotatePlatform(DeltaTime);
-
-	if (elapsedTime > 1.0f) {
-		UE_LOG(LogTemp, Display, TEXT("DeltaTime: %.2f. Elapsed Time: %.2f seconds"), DeltaTime, elapsedTime);
-		elapsedTime = 0.0f;
-	}
+	this->RotatePlatform(DeltaTime);
 
 	//UE_LOG(LogTemp, Display, TEXT("Tick DeltaTime: %.6f"), DeltaTime);
 }
-

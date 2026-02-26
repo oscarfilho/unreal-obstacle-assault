@@ -36,6 +36,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float moveDistance;
 
+	UPROPERTY(EditAnywhere)
+	FRotator RotationVelocity;
+
 	bool IsGoing = true;
 	
 	enum MyStates{
@@ -49,6 +52,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	virtual void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	float GetDistanceMoved();
 	void MovePlatform(float DeltaTime);
 	void RotatePlatform(float DeltaTime);
 };
