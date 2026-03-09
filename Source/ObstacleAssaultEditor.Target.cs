@@ -11,5 +11,7 @@ public class ObstacleAssaultEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_6;
 		ExtraModuleNames.Add("ObstacleAssault");
-	}
+		//BuildEnvironment = TargetBuildEnvironment.Unique;
+		bOverrideBuildEnvironment = true;
+    }
 }
